@@ -43,6 +43,10 @@ export default function Navigation() {
                         <span>📖</span>
                         <span>単語学習</span>
                     </Link>
+                    <Link href="/my-flashcards" style={styles.navLink}>
+                        <span>🗂️</span>
+                        <span>自作カード</span>
+                    </Link>
                     <Link href="/diary" style={styles.navLink}>
                         <span>✍️</span>
                         <span>英語日記</span>

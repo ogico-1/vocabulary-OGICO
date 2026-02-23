@@ -76,7 +76,7 @@ export default function WeakWordsPage() {
                         </div>
                     </div>
                 </div>
-            </header>
+            </div>
 
             {/* ソートと復習ボタン */}
             <div style={styles.controls}>

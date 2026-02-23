@@ -97,14 +97,14 @@ export default function ResultPage() {
 
                     <div style={styles.statBox}>
                         <div style={styles.statLabel}>正解数</div>
-                        <div style={styles.statValue} style={{ color: 'var(--color-success)' }}>
+                        <div style={{ ...styles.statValue, color: 'var(--color-success)' }}>
                             {results.filter(r => r.isCorrect).length}問
                         </div>
                     </div>
 
                     <div style={styles.statBox}>
                         <div style={styles.statLabel}>不正解数</div>
-                        <div style={styles.statValue} style={{ color: 'var(--color-error)' }}>
+                        <div style={{ ...styles.statValue, color: 'var(--color-error)' }}>
                             {results.filter(r => !r.isCorrect).length}問
                         </div>
                     </div>

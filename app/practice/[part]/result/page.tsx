@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Question, QuestionExplanation, PracticeSession } from '@/types/question';
@@ -9,7 +9,7 @@ import { generateExplanation } from '@/lib/ai/questionGenerator';
 import Button from '@/components/shared/Button';
 import ExplanationBlock from '@/components/practice/ExplanationBlock';
 
-export default function ResultPage() {
+function ResultContent() {
     const params = useParams();
     const searchParams = useSearchParams();
     const part = parseInt(params.part as string);
@@ -207,6 +207,14 @@ export default function ResultPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function ResultPage() {
+    return (
+        <Suspense fallback={<div style={styles.loading}><div>読み込み中...</div></div>}>
+            <ResultContent />
+        </Suspense>
     );
 }
 

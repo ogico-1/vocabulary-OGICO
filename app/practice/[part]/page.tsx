@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Question, TOEICPart, Difficulty, QuestionResult, PracticeSession } from '@/types/question';
@@ -8,7 +8,7 @@ import { generateQuestions } from '@/lib/ai/questionGenerator';
 import { savePracticeSession } from '@/lib/storage/userProgress';
 import Button from '@/components/shared/Button';
 
-export default function PracticePartPage() {
+function PracticePartContent() {
     const params = useParams();
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -244,6 +244,14 @@ export default function PracticePartPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function PracticePartPage() {
+    return (
+        <Suspense fallback={<div style={styles.loading}><div>読み込み中...</div></div>}>
+            <PracticePartContent />
+        </Suspense>
     );
 }
 

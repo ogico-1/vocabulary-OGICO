@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { VocabularyWord, VocabularyLevel, VocabularyProgress } from '@/types/vocabulary';
@@ -15,7 +15,7 @@ const LEVELS: { value: VocabularyLevel; label: string; description: string }[] =
     { value: 3, label: 'Level 3', description: '上級 (800+点)' },
 ];
 
-export default function VocabularyPage() {
+function VocabularyContent() {
     const searchParams = useSearchParams();
     const mode = searchParams?.get('mode'); // 'weak' なら苦手単語モード
 
@@ -254,6 +254,14 @@ export default function VocabularyPage() {
     );
 }
 
+export default function VocabularyPage() {
+    return (
+        <Suspense fallback={<div style={styles.loading}><div>読み込み中...</div></div>}>
+            <VocabularyContent />
+        </Suspense>
+    );
+}
+
 const styles: Record<string, React.CSSProperties> = {
     empty: {
         display: 'flex',
@@ -399,6 +407,7 @@ const styles: Record<string, React.CSSProperties> = {
         fontSize: '1rem',
         color: 'var(--color-text-tertiary)',
         fontStyle: 'italic',
+        // Note: opacity is not valid standard CSS property in this context but we'll leave it if it was there (it wasn't)
     },
     cardBack: {
         width: '100%',
@@ -466,5 +475,13 @@ const styles: Record<string, React.CSSProperties> = {
     correctButton: {
         flex: 1,
         maxWidth: '300px',
+    },
+    loading: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '60vh',
+        gap: 'var(--spacing-lg)',
     },
 };
